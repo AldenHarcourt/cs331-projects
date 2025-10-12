@@ -1,0 +1,20 @@
+PS C:\Users\alden\School\Fall 25\Networks> tracert ftp.kaist.ac.kr      
+
+Tracing route to ftp.sparcs.org [210.117.237.2]
+over a maximum of 30 hops:
+
+  1     6 ms     6 ms     3 ms  10.133.0.254 
+  2    20 ms    10 ms     9 ms  137.22.198.4 
+  3    24 ms    11 ms     8 ms  telecomb-gr-01-te0-2-0-11-789.northernlights.gigapop.net [146.57.254.7] 
+  4    10 ms     8 ms    10 ms  mtc-gr-01-1-hu-0-9-0-0.1.northernlights.gigapop.net [146.57.252.193] 
+  5    12 ms    14 ms     9 ms  sdn-sw.minn-601-re.northernlights.gigapop.net [146.57.255.241] 
+  6    19 ms    20 ms    21 ms  hundredge-0-0-0-26.4079.core1.eqch.net.internet2.edu [163.253.2.160] 
+  7    19 ms    22 ms    19 ms  fourhundredge-0-0-0-6.4079.core1.star.net.internet2.edu [163.253.2.21] 
+  8    30 ms    15 ms    17 ms  internet2-kreonet2.chic.kreonet2.net [134.75.108.45] 
+  9     *        *        *     Request timed out.
+ 10   162 ms   164 ms   163 ms  dj-br1--daej-rtr2kreonet2.net [134.75.103.121] 
+ 11   181 ms   164 ms   191 ms  dj-ss--dj-br1 [134.75.8.74] 
+ 12   177 ms   162 ms   170 ms  core.router.sparcs.net [210.117.237.254] 
+ 13   180 ms   171 ms   212 ms  ftp.kaist.ac.kr [210.117.237.2] 
+
+Trace complete.

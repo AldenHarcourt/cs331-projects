@@ -1,0 +1,26 @@
+PS C:\Users\alden\School\Fall 25\Networks> tracert www.ethz.ch   
+
+Tracing route to www.ethz.ch [129.132.19.216]
+over a maximum of 30 hops:
+
+  1     6 ms     4 ms     4 ms  10.133.0.254 
+  2    28 ms     8 ms    11 ms  137.22.198.4 
+  3    12 ms     9 ms    10 ms  telecomb-gr-01-te0-2-0-11-789.northernlights.gigapop.net [146.57.254.7] 
+  4    10 ms    18 ms     9 ms  mtc-gr-01-1-hu-0-9-0-0.1.northernlights.gigapop.net [146.57.252.193] 
+  5    15 ms    12 ms    12 ms  sdn-sw.minn-601-re.northernlights.gigapop.net [146.57.255.241] 
+  6    39 ms    40 ms    36 ms  hundredge-0-0-0-26.4079.core2.eqch.net.internet2.edu [163.253.2.162] 
+  7    37 ms    39 ms    41 ms  fourhundredge-0-0-0-0.4079.core2.clev.net.internet2.edu [163.253.2.16] 
+  8    53 ms    36 ms    41 ms  fourhundredge-0-0-0-1.4079.core1.alba.net.internet2.edu [163.253.1.20] 
+  9    37 ms    50 ms    36 ms  fourhundredge-0-0-0-0.4079.core1.bost2.net.internet2.edu [163.253.2.173] 
+ 10   107 ms   103 ms   102 ms  198.71.45.233 
+ 11     *        *        *     Request timed out.
+ 12     *        *        *     Request timed out.
+ 13   110 ms   110 ms   110 ms  ae3-0.mx1.gen.ch.geant.net [62.40.98.76] 
+ 14   113 ms   113 ms   112 ms  swice1-100ge-0-3-0-1.switch.ch [62.40.124.22] 
+ 15   125 ms   113 ms   113 ms  swiCE1-400GE-0-0-0-0.switch.ch [130.59.37.34] 
+ 16   127 ms   118 ms   119 ms  swiEZ2-400GE-0-0-0-0.switch.ch [130.59.38.81] 
+ 17   114 ms   114 ms   114 ms  192-33-92-1.net4.ethz.ch [192.33.92.1] 
+ 18   126 ms   116 ms   135 ms  192-33-92-169.net4.ethz.ch [192.33.92.169] 
+ 19   118 ms   114 ms   115 ms  cms-publish.ethz.ch [129.132.19.216] 
+
+Trace complete.

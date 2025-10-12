@@ -1,0 +1,37 @@
+PS C:\Users\alden\School\Fall 25\Networks> tracert www.uchile.cl
+
+Tracing route to www.uchile.cl [200.89.76.36]
+over a maximum of 30 hops:
+
+  1     4 ms     4 ms     7 ms  10.133.0.254
+  2    14 ms     6 ms     6 ms  137.22.198.4
+  3    13 ms     9 ms    10 ms  telecomb-gr-01-te0-2-0-11-789.northernlights.gigapop.net [146.57.254.7]
+  4    11 ms     8 ms     8 ms  mtc-gr-01-1-hu-0-9-0-0.1.northernlights.gigapop.net [146.57.252.193]
+  5     8 ms    11 ms    13 ms  sdn-sw.minn-601-re.northernlights.gigapop.net [146.57.255.241] 
+  6    41 ms    41 ms    44 ms  hundredge-0-0-0-26.4079.core1.eqch.net.internet2.edu [163.253.2.160] 
+  7    39 ms    42 ms    45 ms  fourhundredge-0-0-0-12.4079.core1.chic.net.internet2.edu [163.253.2.72] 
+  8    55 ms    43 ms    41 ms  fourhundredge-0-0-0-1.4079.core2.cinc.net.internet2.edu [163.253.2.23] 
+  9    46 ms    42 ms    43 ms  fourhundredge-0-0-0-21.4079.core1.cinc.net.internet2.edu [163.253.1.88] 
+ 10    41 ms    42 ms    43 ms  fourhundredge-0-0-0-0.4079.core2.nash.net.internet2.edu [163.253.2.31] 
+ 11    43 ms    43 ms    41 ms  fourhundredge-0-0-0-0.4079.core2.atla.net.internet2.edu [163.253.1.252] 
+ 12    47 ms    54 ms    50 ms  fourhundredge-0-0-0-22.4079.core1.atla.net.internet2.edu [163.253.1.102] 
+ 13    42 ms    46 ms    42 ms  fourhundredge-0-0-0-6.4079.core1.jack.net.internet2.edu [163.253.1.5] 
+ 14    47 ms    47 ms    48 ms  i2-mia.redclara.net [200.0.207.9] 
+ 15   161 ms   160 ms   159 ms  mia-pty.redclara.net [200.0.204.30] 
+ 16   161 ms   160 ms   160 ms  pty-scl.redclara.net [200.0.204.14] 
+ 17   160 ms   161 ms   168 ms  scl-reuna.redclara.net [200.0.204.152] 
+ 18   171 ms   170 ms   160 ms  ra-uchile-rai.reuna.cl [146.83.242.26] 
+ 19   161 ms   160 ms   160 ms  172.16.40.177 
+ 20   160 ms   164 ms   167 ms  172.16.40.177 
+ 21     *        *        *     Request timed out.
+ 22     *        *        *     Request timed out.
+ 23     *        *        *     Request timed out.
+ 24     *        *        *     Request timed out.
+ 25     *        *        *     Request timed out.
+ 26     *        *        *     Request timed out.
+ 27     *        *        *     Request timed out.
+ 28     *        *        *     Request timed out.
+ 29     *        *        *     Request timed out.
+ 30     *        *        *     Request timed out.
+
+Trace complete.

@@ -1,5 +1,8 @@
-This is the README file for [NAME]'s CS 331, Fall 2025, project repository
+This is the README file for Alden Harcourt's CS 331, Fall 2025, project repository
 
 ## Contents of this repository
 
-[you fill this in]
+DNS Project
+Network Topology Project
+Reliable Transport Project
+Routing Project
