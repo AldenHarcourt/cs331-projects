@@ -1,7 +1,7 @@
-This is the README file for [NAME]'s Network Topology project
+This is the README file for Alden Harcourt's Network Topology project
 
 CS 331, Fall 2025
 
 ## Directory contents
 
-[you fill this in]
+All project files, including the final presentation, raw data, and visual artifacts, are located within the `NetworkTopology` folder.

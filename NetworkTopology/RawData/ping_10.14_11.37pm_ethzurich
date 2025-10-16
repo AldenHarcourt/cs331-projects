@@ -1,0 +1,16 @@
+Pinging www.ethz.ch [129.132.19.216] with 32 bytes of data:
+Reply from 129.132.19.216: bytes=32 time=119ms TTL=46
+Reply from 129.132.19.216: bytes=32 time=119ms TTL=46
+Reply from 129.132.19.216: bytes=32 time=115ms TTL=46
+Reply from 129.132.19.216: bytes=32 time=113ms TTL=46
+Reply from 129.132.19.216: bytes=32 time=114ms TTL=46
+Reply from 129.132.19.216: bytes=32 time=113ms TTL=46
+Reply from 129.132.19.216: bytes=32 time=114ms TTL=46
+Reply from 129.132.19.216: bytes=32 time=115ms TTL=46
+Reply from 129.132.19.216: bytes=32 time=121ms TTL=46
+Reply from 129.132.19.216: bytes=32 time=114ms TTL=46
+
+Ping statistics for 129.132.19.216:
+    Packets: Sent = 10, Received = 10, Lost = 0 (0% loss),
+Approximate round trip times in milli-seconds:
+    Minimum = 113ms, Maximum = 121ms, Average = 115ms

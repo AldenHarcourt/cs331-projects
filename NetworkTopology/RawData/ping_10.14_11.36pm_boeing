@@ -1,0 +1,18 @@
+PS C:\Users\alden\School\Fall 25\Networks\cs331-projects\NetworkTopology> ping -n 10 www.boeing.com  
+
+Pinging d1pt7e7bvjlgwo.cloudfront.net [18.160.181.124] with 32 bytes of data:
+Reply from 18.160.181.124: bytes=32 time=10ms TTL=250
+Reply from 18.160.181.124: bytes=32 time=8ms TTL=250
+Reply from 18.160.181.124: bytes=32 time=8ms TTL=250
+Reply from 18.160.181.124: bytes=32 time=8ms TTL=250
+Reply from 18.160.181.124: bytes=32 time=8ms TTL=250
+Reply from 18.160.181.124: bytes=32 time=9ms TTL=250
+Reply from 18.160.181.124: bytes=32 time=9ms TTL=250
+Reply from 18.160.181.124: bytes=32 time=8ms TTL=250
+Reply from 18.160.181.124: bytes=32 time=9ms TTL=250
+Reply from 18.160.181.124: bytes=32 time=8ms TTL=250
+
+Ping statistics for 18.160.181.124:
+    Packets: Sent = 10, Received = 10, Lost = 0 (0% loss),
+Approximate round trip times in milli-seconds:
+    Minimum = 8ms, Maximum = 10ms, Average = 8ms

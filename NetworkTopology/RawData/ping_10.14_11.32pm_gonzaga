@@ -1,0 +1,16 @@
+Pinging www.gonzaga.edu [20.72.217.90] with 32 bytes of data:
+Reply from 20.72.217.90: bytes=32 time=64ms TTL=113
+Reply from 20.72.217.90: bytes=32 time=48ms TTL=113
+Reply from 20.72.217.90: bytes=32 time=47ms TTL=113
+Reply from 20.72.217.90: bytes=32 time=49ms TTL=113
+Reply from 20.72.217.90: bytes=32 time=47ms TTL=113
+Reply from 20.72.217.90: bytes=32 time=47ms TTL=113
+Reply from 20.72.217.90: bytes=32 time=129ms TTL=113
+Reply from 20.72.217.90: bytes=32 time=47ms TTL=113
+Reply from 20.72.217.90: bytes=32 time=47ms TTL=113
+Reply from 20.72.217.90: bytes=32 time=48ms TTL=113
+
+Ping statistics for 20.72.217.90:
+    Packets: Sent = 10, Received = 10, Lost = 0 (0% loss),
+Approximate round trip times in milli-seconds:
+    Minimum = 47ms, Maximum = 129ms, Average = 57ms

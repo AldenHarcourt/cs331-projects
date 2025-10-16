@@ -1,0 +1,16 @@
+Pinging ftp.sparcs.org [210.117.237.2] with 32 bytes of data:
+Reply from 210.117.237.2: bytes=32 time=175ms TTL=51
+Reply from 210.117.237.2: bytes=32 time=161ms TTL=51
+Reply from 210.117.237.2: bytes=32 time=161ms TTL=51
+Reply from 210.117.237.2: bytes=32 time=163ms TTL=51
+Reply from 210.117.237.2: bytes=32 time=161ms TTL=51
+Reply from 210.117.237.2: bytes=32 time=161ms TTL=51
+Reply from 210.117.237.2: bytes=32 time=160ms TTL=51
+Reply from 210.117.237.2: bytes=32 time=162ms TTL=51
+Reply from 210.117.237.2: bytes=32 time=163ms TTL=51
+Reply from 210.117.237.2: bytes=32 time=161ms TTL=51
+
+Ping statistics for 210.117.237.2:
+    Packets: Sent = 10, Received = 10, Lost = 0 (0% loss),
+Approximate round trip times in milli-seconds:
+    Minimum = 160ms, Maximum = 175ms, Average = 162ms

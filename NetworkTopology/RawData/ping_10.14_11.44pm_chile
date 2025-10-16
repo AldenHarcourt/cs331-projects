@@ -1,0 +1,14 @@
+Pinging www.uchile.cl [200.89.76.36] with 32 bytes of data:
+Request timed out.
+Request timed out.
+Request timed out.
+Request timed out.
+Request timed out.
+Request timed out.
+Request timed out.
+Request timed out.
+Request timed out.
+Request timed out.
+
+Ping statistics for 200.89.76.36:
+    Packets: Sent = 10, Received = 0, Lost = 10 (100% loss),
