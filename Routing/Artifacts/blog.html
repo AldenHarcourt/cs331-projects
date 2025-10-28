@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Internet's Hidden Highways</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        header h1,
+        header h2,
+        header p.byline {
+            display: block; /* Title stacks verticaally */
+        }
+        header h1 {
+            margin: 0 0 0.25em 0;
+        }
+        header h2 {
+            margin: 0 0 0.5em 0; 
+        }
+
+    </style>
+</head>
+<body>
+    <header>
+        <h1>The Internet's Hidden Highways</h1>
+        <h2>What <code>traceroute</code> vs. BGP Taught Me About Academic vs. Commercial Routing</h2>
+        <p class="byline">By Alden Harcourt</p>
+    </header>
+
+    <article>
+        <h2>The Map I Thought I Knew</h2>
+        <p>In the first part of this project, I set out to map the internet from my school, Carleton College. Using <code>traceroute</code> I sent out packets, charting the router-by-router path to six destinations around the world, each providing unique insights. I created a hand-drawn map that showed Carleton's on-ramps to the internet—a commercial path through MICE (a local Minneapolis exchange) and an academic path through NorthernLights GigaPoP (AS217) to Internet2 (AS11537).</p>
+        
+        <p>My map felt complete. It told a clean story of two distinct paths. But I had only seen <em>one</em> road to each place. <code>Traceroute</code> shows you the single path your packets <em>happened</em> to take, from one specific starting point. It doesn't show you the <em>entire</em> road atlas.</p>
+        
+        <p>To see that, I had to look at the internet's master GPS: the <strong>Border Gateway Protocol (BGP)</strong>. What I found wasn't just a few new roads—it was a completely different map, one that showed my specialized academic internet is just one path in a vast, redundant, and commercially-driven web.</p>
+
+        <h2>The Internet's Master Atlas: BGP</h2>
+        
+        <p>While <code>traceroute</code> sends packets to discover routers, BGP is the protocol that <strong>Autonomous Systems (ASes)</strong>—large networks like ISPs, universities, or corporations—use to announce which IP addresses they own and what paths they can take to reach other networks. To peek at these master routing tables, I <code>telnet</code>-ed into a public <strong>Route Views collector</strong> in Chicago (<code>route-views.chicago.routeviews.org</code>). Think of this as a public library of internet maps.</p>
+        
+        <p>My very first query gave me a surprise. The BGP path from Chicago to Carleton (AS26557) didn't go through our academic partner, Internet2. The best path was via <strong><a href="https://bgp.he.net/AS6939">Hurricane Electric (AS6939)</a></strong>, a massive global backbone I had never even seen in my original traces. This was my first clue that this view would be different.</p>
+        
+        <p><strong>A quick note on methodology:</strong> My goal is to approximate the path from Carleton to a destinion. The path from Carleton to the Chicago collector is <code>AS26557 (Carleton) &rarr; AS6939 (Hurricane Electric)</code>. To see the full, approximate path from Carleton to a destination, we just concatenate this route onto the beginning of the paths leaving Chicago. I have forgone this concatenation in this post to avoid clutter.</p>
+
+        <h2>Finding 1: The Academic Bubble is a Global Mesh</h2>
+        
+        <p>My biggest discovery in Part 1 was the academic superhighway. To reach other universities like ETH Zurich in Switzerland or KAIST in South Korea, my packets from Carleton (AS26557) hopped onto Northern Lights (AS217), then to Internet2 (AS11537), and then to other national academic networks like SWITCH (AS559) or KREONET2 (AS1237). It was a clean, non-commercial path.</p>
+        
+        <p>The BGP data from Chicago told a different story.</p>
+        
+        <p><strong>To Korea (KAIST/SPARCS, AS152671):</strong></p>
+        <ul>
+            <li><strong>My Traceroute Path:</strong> <code>Carleton (AS26557) &rarr; Internet2 (AS11537) &rarr; KREONET2 (AS1237) &rarr; SPARCS (AS152671)</code></li>
+            <li><strong>BGP Best Path:</strong> <code>Chicago &rarr; <a href="https://www.es.net/">ESnet (AS293)</a> &rarr; KREONET (AS17579/AS1237) &rarr; SPARCS (AS152671)</code></li>
+        </ul>
+        <p>This path is <em>still</em> academic! But instead of Internet2, the Chicago collector's best path is through <strong>ESnet (AS293)</strong>, the US Department of Energy's "Energy Sciences Network." This shows that the academic internet isn't one network, but a collection of high-speed research networks with their own peering relationships.</p>
+        
+        <p><strong>To Switzerland (ETH Zurich, AS559):</strong></p>
+        <ul>
+            <li><strong>My Traceroute Path:</strong> <code>Carleton (AS26557) &rarr; Internet2 (AS11537) &rarr; GEANT (AS20965) &rarr; SWITCH (AS559)</code></li>
+            <li><strong>BGP Best Path:</strong> <code>Chicago &rarr; <a href="https://www.i3d.net/">i3Dnet (AS49544)</a> &rarr; SWITCH (AS559)</code></li>
+        </ul>
+        <p>This was a shock. The public collector's best path to the Swiss academic network is through <strong>i3Dnet (AS49544)</strong>, a Dutch company that specializes in high-performance hosting for... online gaming. My academic superhighway was bypassed entirely in favor of a commercial gaming backbone, likely because they have a very fast, direct peering relationship with SWITCH in Europe.</p>
+        
+        <h2>Finding 2: Solving the Mysteries of the "Security Walls"</h2>
+        
+        <p>In Part 1, I ran into a Security Wall. My traceroutes to the University of Cape Town and U. Chile made it to their national networks but then timed out, leaving my map with a <code>ASN:?</code>. <code>Traceroute</code> packets (ICMP) are often be blocked by firewalls. BGP advertisements, which are necessary for the sites to even be on the internet, cannot be blocked.</p>
+        
+        <p>BGP gave me the answers:</p>
+        <ul>
+            <li>University of Cape Town is <strong>AS36982</strong></li>
+            <li>U. Chile is <strong>AS23140</strong> (<code>CTS Communication (AS19653) &rarr; Lumen (AS3356 & AS3549) &rarr; U. Chile (AS23140)</code>)</li>
+        </ul>
+        
+        <p>The path to Cape Town was my favorite discovery. My traceroute from Carleton went through the South African academic network, <strong>TENET (AS2018)</strong>, before timing out. The BGP path from Chicago was: <code>Chicago &rarr; i3Dnet (AS49544) &rarr; TENET (AS2018) &rarr; UCT (AS36982)</code>.</p>
+        
+        <p>You might recognize I3Dnet as the same gaming network from the ETH Zurich path. The BGP data shows this single commercial company has a direct link to <strong>TENET (AS2018)</strong>, the exact South African academic network I saw in my traceroute. BGP just revealed the missing commercial bridge that connects the public internet to that academic network.</p>
+        
+        <figure>
+            <img src="i3Dnet map.jpg" alt="A world map showing the i3Dnet global network backbone">
+            <figcaption>The global network of i3Dnet (AS49544), a network that acts as a key bridge to both Swiss and South African universities. Image: i3D.net</figcaption>
+        </figure>
+        
+        <h2>Finding 3: The Hyperscalers and the Path of One</h2>
+        
+        <p>What about the commercial sites? My Part 1 traces showed these were fast and short. The BGP data confirmed why they're short.</p>
+        
+        <p><strong>Boeing (AS16509, Amazon CDN):</strong> The BGP path from Chicago was <code>Chicago &rarr; 365 Data Centers (AS19151) &rarr; Cogent (AS174) &rarr; AWS (AS16509)</code>. This confirms the CDN story and shows the chain: Datacenter &rarr; Tier 1 Backbone &rarr; Cloud Provider.</p>
+        
+        <p><strong>Gonzaga (AS8075, Microsoft):</strong> The BGP path from Chicago was even simpler. It was just: <code>Chicago &rarr; Microsoft (AS8075)</code>. One hop. This is the hyperscaler effect. Microsoft's network is so massive that it's not just a destination, it's its own backbone. It's physically present at the same Chicago exchange as the route collector, making the path a single jump.</p>
+        
+        <h2>Finding 4: The True Map is a Web of Choices</h2>
+        
+        <p>The <code>bestpath</code> command showed me the best path. But the real power of BGP is its redundancy. By removing <code>bestpath</code> from my command, I saw all advertised routes.</p>
+        
+        <p>For every single destination, there weren't 1 or 2 paths, but <strong>16 to 18 available routes</strong>. The path lengths (number of AS-hops) varied wildly. To Gonzaga, the best path was 1 hop, but other paths were 4 or 5 hops long.</p>
+        
+        <p>These alternate paths were a who's who of Tier 1 backbones I had never seen from my dorm. Names like <strong>Hurricane Electric (AS6939)</strong>, <strong>Lumen (AS3356)</strong>, and <strong>Cogent (AS174)</strong> appeared over and over. This is the real magic of the internet. It's not just one road but a web of 18 different roads. If a submarine cable is cut, BGP simply re-routes traffic down one of the 17 other available paths, and most users never notice.</p>
+        
+                <figure>
+                    <img src="Advertised BGP Routes vs. Destination.png" alt="Advertised BGP Routes vs. Destination">
+                    <figcaption>Advertised BGP Routes vs. Destination</figcaption>
+                </figure>
+        
+                <h2>How My Understanding of the Internet Changed</h2>
+        
+        <p>My understanding of my Part 1 network topology is now both clearer and more nuanced.
+        <ol>
+            <li><strong>I've found unknown ASNs.</strong> The <code>ASN:?</code> labels are now filled in: AS23140 for U. Chile and AS36982 for U. Cape Town.</li>
+            <li><strong>I now know the main players.</strong> My original understanding left out some of the most prevalent players in the internet's architechture, the massive tier-1 backbones (like AS6939) and key commercial peers (like AS49544)</li>
+            <li><strong>There is no one single path between a source and destination.</strong> An accurate map of the internet would show a dense mesh of parallel lines, displaying the 15+ alternate routes that BGP can provide, bolstering network resilience.</li>
+        </ol>
+        </p>       
+        <p><code>Traceroute</code> gave me a first-person glimpse of <em>a</em> path. BGP gave me the 30,000-foot view of <em>all</em> paths. It showed me that the internet isn't a single, engineered system, but a massive, living, and redundant web of business relationships. And, as it turns out, my academic road is just one small part of that.</p>
+
+    <footer>
+        <p><strong>Author:</strong> Alden Harcourt, Computer Science Student</p>
+        <p>Project for CS 331: Computer Networks, Fall 2025. All BGP data was collected from the <code>route-views.chicago.routeviews.org</code> collector on Oct 26-27, 2025.</p>
+    </footer>
+</body>
+</html>
