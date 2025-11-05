@@ -4,4 +4,5 @@ CS 331, Fall 2025
 
 ## Contents of this directory
 
-[you fill this in]
+All bgp data is found in RawData/.
+All figures, html, and css are found in Artifacts/.
