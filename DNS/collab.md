@@ -1,0 +1,1 @@
+The only outside source used was https://dnspython.readthedocs.io/en/latest/. This was used for crafting dnsQueries.py.

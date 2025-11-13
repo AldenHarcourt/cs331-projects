@@ -1,0 +1,419 @@
+Part 1:
+Q: What transport layer protocol does DNS run over in this example? Explain why you think DNS runs over this protocol (answer in terms of the services DNS requires from the transport layer).
+A: The packets show that DNS runs over UDP in this example. This is likely because DNS prioritizes low latency and UDP is able to skip over steps such as the handshake that TCP uses.
+Q: Summarize the contents of the query message.
+how many questions are contained in this message?
+what type of query is this?
+what flags are set?
+what data is in the body of the message?
+A: 
+The query is asking one question. It is asking for the IP address of the server hosting ash-speed.hetzner.com
+This is a type A request.
+The flags set are: Message is a query, Standard query, Do query recursively.
+The data in the body of the message is the type of query, which is a, followed by the hostname, ash-speed.hetzner.com
+Q: Summarize the contents of the response message.
+how many responses does this message contain?
+identify the (name, TTL, type, class, value) tuple for each response.
+what flags are set?
+A:
+This message contains one response with 10 Resource Records. They are:
+Answer RRs: 1
+1) ash-speed.hetzner.com, 1:48:25 type A, class IN, addr 5.161.7.195
+Authority RRs: 3
+2) hetzner.com, 5:18:5, type NS, class IN, ns ns1.your-server.de
+3) hetzner.com, 5:18:5, type NS, class IN, ns ns.second-ns.com
+4) hetzner.com, 5:18:5, type NS, class IN, ns ns3.second-ns.de
+Additional RRs: 6
+5) ns1.your-server.de, 20:2:52, type A, class IN, addr 213.133.100.102
+6) ns.second-ns.com, 21:7:40 type A, class IN, addr 213.239.204.242 
+7) ns3.second-ns.de:, 20:2:52, type A, class IN, addr 193.47.99.4
+8) ns1.your-server.de, 20:2:52, type AAAA, class IN, addr 2a01:4f8:0:1::5ddc:1
+9) ns.second-ns.com, 21:7:40, type AAAA, class IN, addr 2a01:4f8:0:a101::b:1
+10) ns3.second-ns.de, 20:2:52, type AAAA, class IN, addr 2001:67c:192c::add:b3
+The flags set are: Response, Do query recursively, Server can do recursive queries, Standard query response, No error, Server is not authority for domain.
+
+
+Part2:
+1.
+DNS configuration
+
+Output from the scutil --dns command:
+
+resolver #1
+
+  search domain[0] : mathcs.carleton.edu
+
+  nameserver[0] : 137.22.1.6
+
+  nameserver[1] : 137.22.1.7
+
+  if_index : 8 (en0)
+
+  flags    : Request A records
+
+  reach    : 0x00020002 (Reachable,Directly Reachable Address)
+
+
+
+resolver #2
+
+  domain   : local
+
+  options  : mdns
+
+  timeout  : 5
+
+  flags    : Request A records
+
+  reach    : 0x00000000 (Not Reachable)
+
+  order    : 300000
+
+
+
+resolver #3
+
+  domain   : 254.169.in-addr.arpa
+
+  options  : mdns
+
+  timeout  : 5
+
+  flags    : Request A records
+
+  reach    : 0x00000000 (Not Reachable)
+
+  order    : 300200
+
+
+
+resolver #4
+
+  domain   : 8.e.f.ip6.arpa
+
+  options  : mdns
+
+  timeout  : 5
+
+  flags    : Request A records
+
+  reach    : 0x00000000 (Not Reachable)
+
+  order    : 300400
+
+
+
+resolver #5
+
+  domain   : 9.e.f.ip6.arpa
+
+  options  : mdns
+
+  timeout  : 5
+
+  flags    : Request A records
+
+  reach    : 0x00000000 (Not Reachable)
+
+  order    : 300600
+
+
+
+resolver #6
+
+  domain   : a.e.f.ip6.arpa
+
+  options  : mdns
+
+  timeout  : 5
+
+  flags    : Request A records
+
+  reach    : 0x00000000 (Not Reachable)
+
+  order    : 300800
+
+
+
+resolver #7
+
+  domain   : b.e.f.ip6.arpa
+
+  options  : mdns
+
+  timeout  : 5
+
+  flags    : Request A records
+
+  reach    : 0x00000000 (Not Reachable)
+
+  order    : 301000
+
+
+
+DNS configuration (for scoped queries)
+
+
+
+resolver #1
+
+  search domain[0] : mathcs.carleton.edu
+
+  nameserver[0] : 137.22.1.6
+
+  nameserver[1] : 137.22.1.7
+
+  if_index : 8 (en0)
+
+  flags    : Scoped, Request A records
+
+  reach    : 0x00020002 (Reachable,Directly Reachable Address)
+
+The command lists seven resolvers. However, only resolver #1 is marked as reachable. 
+Therefore, only one resolver is configured for regular internet queries, and it has two nameservers.
+
+The default name server is nameserver[0] which is 137.22.1.6
+
+
+
+2. 
+Output from the dig ash-speed.hetzner.com command:
+
+; <<>> DiG 9.10.6 <<>> ash-speed.hetzner.com
+
+;; global options: +cmd
+
+;; Got answer:
+
+;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 5837
+
+;; flags: qr rd ra; QUERY: 1, ANSWER: 1, AUTHORITY: 3, ADDITIONAL: 7
+
+
+
+;; OPT PSEUDOSECTION:
+
+; EDNS: version: 0, flags:; udp: 1232
+
+;; QUESTION SECTION:
+
+;ash-speed.hetzner.com.		IN	A
+
+
+
+;; ANSWER SECTION:
+
+ash-speed.hetzner.com.	7200	IN	A	5.161.7.195
+
+
+
+;; AUTHORITY SECTION:
+
+hetzner.com.		13065	IN	NS	ns1.your-server.de.
+
+hetzner.com.		13065	IN	NS	ns.second-ns.com.
+
+hetzner.com.		13065	IN	NS	ns3.second-ns.de.
+
+
+
+;; ADDITIONAL SECTION:
+
+ns1.your-server.de.	16033	IN	A	213.133.100.102
+
+ns.second-ns.com.	7039	IN	A	213.239.204.242
+
+ns3.second-ns.de.	16033	IN	A	193.47.99.4
+
+ns1.your-server.de.	16033	IN	AAAA	2a01:4f8:0:1::5ddc:1
+
+ns.second-ns.com.	7039	IN	AAAA	2a01:4f8:0:a101::b:1
+
+ns3.second-ns.de.	16033	IN	AAAA	2001:67c:192c::add:b3
+
+
+
+;; Query time: 125 msec
+
+;; SERVER: 137.22.1.6#53(137.22.1.6)
+
+;; WHEN: Mon Nov 10 13:32:31 CST 2025
+
+;; MSG SIZE  rcvd: 285
+
+
+Message Parts:
+Header: opcode: QUERY, status: NOERROR, id: 5837.
+Flags: qr, rd, ra
+Record Counts: QUERY: 1, ANSWER: 1, AUTHORITY: 3, ADDITIONAL: 7.
+Question Section: ash-speed.hetzner.com. (Type: A, Class: IN).
+Answer Section: ash-speed.hetzner.com. 7200 IN A 5.161.7.195.
+Authority Section: hetzner.com. 13065 IN NS ns1.your-server.de, hetzner.com. 13065 IN NS ns.second-ns.com, hetzner.com. 13065 IN NS ns3.second-ns.de
+Additional Section: ns1.your-server.de. 16033 IN A 213.133.100.102,ns.second-ns.com. 7039 IN A 213.239.204.242, ns3.second-ns.de. 16033 IN A 193.47.99.4, ns1.your-server.de. 16033 IN AAAA 2a01:4f8:0:1::5ddc:1, ns.second-ns.com. 7039 IN AAAA 2a01:4f8:0:a101::b:1, ns3.second-ns.de. 16033 IN AAAA 2001:67c:192c::add:b3
+Query Metadata: Query took 125 msec. It was answered by the server at 137.22.1.6 on port 53. Message size is 285 bytes.
+
+Comparison of dig and Wireshark
+dig provides a clearn, more human readable summary. It also includes some helpful metadata. 
+Wireshark shows the full packet headers of lower layers. The Wireshark trace shows teh query going to 137.22.1.7 whereas the dig command used 137.22.1.6.
+
+
+
+3.
+Output From dig ash-speed.hetzner.com 
+; <<>> DiG 9.10.6 <<>> ash-speed.hetzner.com +trace
+
+;; global options: +cmd
+
+.			500690	IN	NS	l.root-servers.net.
+
+.			500690	IN	NS	c.root-servers.net.
+
+.			500690	IN	NS	h.root-servers.net.
+
+.			500690	IN	NS	j.root-servers.net.
+
+.			500690	IN	NS	b.root-servers.net.
+
+.			500690	IN	NS	e.root-servers.net.
+
+.			500690	IN	NS	a.root-servers.net.
+
+.			500690	IN	NS	g.root-servers.net.
+
+.			500690	IN	NS	i.root-servers.net.
+
+.			500690	IN	NS	f.root-servers.net.
+
+.			500690	IN	NS	k.root-servers.net.
+
+.			500690	IN	NS	d.root-servers.net.
+
+.			500690	IN	NS	m.root-servers.net.
+
+.			500690	IN	RRSIG	NS 8 0 518400 20251123170000 20251110160000 61809 . xZ6p+dvswOx1y69bMbpPSuID2lpF+prK6xUqJe8kmqkcqTSGbkms92/Z wXC7IRN7NiFe6+t6s/EyyFaEyjJcyApLFORVKrXKjcqIwiyZHiYJbn9+ oLsOOoCZ4cIgzERIZD8Z84qlGe1wa21NZ5n+PobXtX1OtDRhmZXVlhzo BOKTiKSi3HDMNHYWKbBrBqDpl8IhDR5Q0s4PofzSJM9fXQlVgh2VIk01 jvMiNWWC+uJHWX5+MTSCexr8Zu1gJf+QxIf+A/Mvg8Sqh1ribd9pyW30 tXsmlk5vmBX89/UwBq1bM4eQMX1kDcKFd0qyr2DEt9Uqx8Giuk8YgMYP 1adaJw==
+
+;; Received 1097 bytes from 137.22.1.7#53(137.22.1.7) in 2 ms
+
+
+
+com.			172800	IN	NS	a.gtld-servers.net.
+
+com.			172800	IN	NS	b.gtld-servers.net.
+
+com.			172800	IN	NS	c.gtld-servers.net.
+
+com.			172800	IN	NS	d.gtld-servers.net.
+
+com.			172800	IN	NS	e.gtld-servers.net.
+
+com.			172800	IN	NS	f.gtld-servers.net.
+
+com.			172800	IN	NS	g.gtld-servers.net.
+
+com.			172800	IN	NS	h.gtld-servers.net.
+
+com.			172800	IN	NS	i.gtld-servers.net.
+
+com.			172800	IN	NS	j.gtld-servers.net.
+
+com.			172800	IN	NS	k.gtld-servers.net.
+
+com.			172800	IN	NS	l.gtld-servers.net.
+
+com.			172800	IN	NS	m.gtld-servers.net.
+
+com.			86400	IN	DS	19718 13 2 8ACBB0CD28F41250A80A491389424D341522D946B0DA0C0291F2D3D7 71D7805A
+
+com.			86400	IN	RRSIG	DS 8 1 86400 20251123210000 20251110200000 61809 . tBqDi1KAJS1f/475ZTO7Gn2uIyUAxQHJbmp+wvI0atR1ZgBV8cHT1tB5 pQ8DbEPgZySPNK3x6iTS1WR+mPWwW4gbEB7qrHXBtIshRf6j9Q6rvBNi CVfNYVzjmoyhwI+CgbMnjyqGWDQ+qBOxF9G3j5jODDtFctpnmUpCl968 fzqAwc5Bkl1IEEfR96029rXgPQURCHsFXVRHXGueG1/4frro420Hy+nR 0SshuWe01x3FQ1Yw3L3gIcmitLZqhNeULMaxM3QZY6Dll2SGFrUVRQHT LvpfLagl9oOFE6E+TGKjgvZICMlZIu8n+Px1+2bJaUoLyL5WiRr4LrD/ yGpxcA==
+
+;; Received 1181 bytes from 193.0.14.129#53(k.root-servers.net) in 42 ms
+
+
+
+hetzner.com.		172800	IN	NS	ns1.your-server.de.
+
+hetzner.com.		172800	IN	NS	ns.second-ns.com.
+
+hetzner.com.		172800	IN	NS	ns3.second-ns.de.
+
+CK0POJMG874LJREF7EFN8430QVIT8BSM.com. 900 IN NSEC3 1 1 0 - CK0Q3UDG8CEKKAE7RUKPGCT1DVSSH8LL  NS SOA RRSIG DNSKEY NSEC3PARAM
+
+CK0POJMG874LJREF7EFN8430QVIT8BSM.com. 900 IN RRSIG NSEC3 13 2 900 20251115002630 20251107231630 46539 com. dxQ1aDzMstWomzJXQiHSR7VgWKs6hBNgpy7YlauK93WaXlKdi2pcZF5F tp8mSfqLDnAB4nX+TU5OrouEjdJj7A==
+
+HFFTP52UUMSKPO4AH6QQ2B2PEDO2OQFM.com. 900 IN NSEC3 1 1 0 - HFFU1CPI3GOFB13MF7A1VN23U83J6L13  NS DS RRSIG
+
+HFFTP52UUMSKPO4AH6QQ2B2PEDO2OQFM.com. 900 IN RRSIG NSEC3 13 2 900 20251117011821 20251110000821 46539 com. b1WPZ/kWI4jkyqY6KWC7uJ+mOlwCgp/sAsoADWxhuoBF4i3fTmdzehZm gQCTljWefPWgnn94SxAwTLl8XUM4AQ==
+
+;; Received 538 bytes from 192.33.14.30#53(b.gtld-servers.net) in 10 ms
+
+
+
+ash-speed.hetzner.com.	7200	IN	A	5.161.7.195
+
+hetzner.com.		7200	IN	NS	ns1.your-server.de.
+
+hetzner.com.		7200	IN	NS	ns.second-ns.com.
+
+hetzner.com.		7200	IN	NS	ns3.second-ns.de.
+
+;; Received 153 bytes from 213.133.100.102#53(ns1.your-server.de) in 111 ms
+
+
+k.root-servers.net at IP 193.0.14.129 answered my query
+
+b.gtld-servers.net at IP 192.33.14.30 answerd my query.
+
+Yes, the final answer came from the authoritative name server ns1.your-server.de at IP 213.133.100.102
+
+Query to the local resolver for the root list: 2ms
+Query to the root server: 42 ms
+Query to the TLD server: 10 ms
+Query to authoritative server: 111 ms
+
+
+Part 3:
+The script dnsQueries.py was used to query the 500 domains and its output is saved to dns_query_results.csv
+
+
+Part 4:
+
+Results from analysis script:
+
+---Failure Stats---
+Carleton Fail %: 27.40
+Google Fail %: 27.60
+Sites w/ different failure: 1
+Sites that differed in failure:
+  - spotxchange.com.
+
+---Address Count Stats---
+Carleton Addr Avg: 4.72
+Carleton Addr StdDev: 5.54
+Google Addr Avg: 4.73
+Google Addr StdDev: 5.52
+
+---Different IPs---
+Sites w/ different IPs: 123
+
+---TTL Stats---
+Carleton (All):
+  Avg: 1403.92
+  StdDev: 7460.50
+
+Google (All):
+  Avg: 749.92
+  StdDev: 2307.92
+
+---TTL Counts Above 300s---
+Carleton: 83
+Google: 70
+
+Answers:
+1.
+The resolvers were nearly identical. Carleton failed on 27.40% of queries and Google failed on 27.60%. The only site that failed on one but not the other was spotxchange.com., which failed for Google. This high failure rate makes sense, as many of the domains are for infrastructure (e.g., akadns.net.) and do not have A records.
+2.
+The resolvers did not differ significantly. Carleton returned an average of 4.72 addresses per query, while Google returned 4.73. The high standard deviation for both (around 5.5) shows that this number varied greatly from site to site, which reflects the variety of sites in the 500 list.
+3. 
+Out of the 363 domains where both resolvers succeeded, 123 sites (about 34%) returned different sets of IP addresses. This clearly shows widespread use of geographic load balancing through CDNs.
+4.
+The resolvers differed significantly. Carleton's average TTL was much higher at 1403.92 seconds, while Google's was 749.92 seconds. This is partially because Carleton received 83 responses with a TTL over 300 seconds (many from Microsoft domains), while Google received only 70.
