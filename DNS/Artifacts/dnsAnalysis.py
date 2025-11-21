@@ -3,7 +3,6 @@ import statistics
 
 INPUT_CSV = '../RawData/dns_query_results.csv'
 
-# --- Initialize counters and lists ---
 total_rows = 0
 carleton_failures = 0
 google_failures = 0
@@ -17,7 +16,7 @@ common_success_count = 0
 
 carleton_ttls_valid = []
 google_ttls_valid = []
-# New counters for high TTLs
+
 carleton_high_ttl_count = 0
 google_high_ttl_count = 0
 
